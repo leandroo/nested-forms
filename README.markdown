@@ -3,8 +3,6 @@ Nested Forms
 
 jQuery plugin making it incredibly easy to implement rich behavior for your nested forms in Rails.
 
-All you have to do is have at least one instance of the nested form on the page (visible or not) and you're set.
-
 [Source](http://github.com/andyferra/nested-forms)
 
 
@@ -18,7 +16,7 @@ Features:
 - CSS class cycling (defaults to 'odd', 'even') (can be customized / disabled)
 - Keyboard Shortcuts (SHIFT-ENTER to add) (can be disabled)
 - Automatic focus on first field of added items (can be customized / disabled)
-- 3.3K Uncompressed
+- 3.5K compressed
 
 
 Simple Example
@@ -70,7 +68,7 @@ Nested, Nested Example
 More Customization
 ------------------
 
-See [defaults object](http://github.com/andyferra/nested-forms/blob/master/jquery-nested-forms.js#L22) in the plugin for a full list of options.
+See the [defaults object](http://github.com/andyferra/nested-forms/blob/master/jquery-nested-forms.js#L22-34) in the plugin for a full list of options.
 
 
 History
@@ -88,5 +86,5 @@ Copyright (c) 2010 Andy Ferra.
 
 Dual licensed under the MIT and GPL licenses:
 
-*  http://www.opensource.org/licenses/mit-license.php
-*  http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html
+*  [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
+*  [http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html)
