@@ -67,4 +67,26 @@ Nested, Nested Example
     $('.hobbies').has_nested_forms('.hobby', { depth: 2 });
 
 
+More Customization
+------------------
+
 See [defaults object](http://github.com/andyferra/nested-forms/blob/master/jquery-nested-forms.js#L22) in the plugin for a full list of options.
+
+
+History
+-------
+
+### 1.0.0 ###
+
+- Initial Release
+
+
+License
+-------
+
+Copyright (c) 2010 Andy Ferra.
+
+Dual licensed under the MIT and GPL licenses:
+
+*  http://www.opensource.org/licenses/mit-license.php
+*  http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html
