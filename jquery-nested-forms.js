@@ -19,16 +19,20 @@
       var parent  = this;
       var $parent = $(parent);
      
+      function inferred_name(){ return nested_form_selector.replace('.', '') }
+
       var defaults = {
         name                  : inferred_name(),
-        add_href_selector     : inferred_add_selector(),
-        remove_href_selector  : inferred_remove_selector(),
+        add_href_selector     : 'a[href="#add_'+inferred_name()+'"]',
+        remove_href_selector  : 'a[href="#remove_'+inferred_name()+'"]',
         delete_field_selector : null,
         focus_field_selector  : 'input[type!=submit][type!=radio][type!=checkbox]:visible:first',
         depth                 : 1,
         cycle_classes         : ['odd', 'even'],
         enable_keyboard       : true,
         always_show_one       : true,
+        add_shortcut          : function(e){ return e.keyCode == 13 && e.shiftKey; }, // Shift-Enter
+        remove_shortcut       : function(e){ return e.keyCode == 8  && e.shiftKey; }, // Shift-Backspace
         after_add             : function(){},
         after_remove          : function(){}
       }
@@ -40,17 +44,25 @@
         return false;
       });
 
-      $parent.find(nested_form_selector).live('keydown', function(event){
+      $(opts.remove_href_selector).live('click', function(){
+        delete_clone(this);
+        return false;
+      });
+
+      $parent.find(nested_form_selector+' input').live('keydown', function(e){
         if (opts.enable_keyboard){
-          if (event.keyCode == 13 && event.shiftKey) {
+          if (opts.add_shortcut(e)) {
             create_clone();
+            return false;
+          } else if (opts.remove_shortcut(e)) {
+            delete_clone(this);
             return false;
           }
         }
       });
 
-      $(opts.remove_href_selector).live('click', function(){
-        var deleted = $(this).parents(nested_form_selector);
+      function delete_clone(insider){
+        var deleted = $(insider).parents(nested_form_selector);
         deleted.find(delete_field_selector()).val(1);
         deleted.hide();
         cycle_classes();
@@ -58,11 +70,10 @@
         if (opts.always_show_one && $parent.find(nested_form_selector+':visible').length == 0) {
           create_clone();
         }
-        return false;
-      });
+      }
 
       function delete_field_selector(){
-        if (opts.delete_field_selector) return opts.delete_field_selector;
+        if (opts.delete_field_selector) { return opts.delete_field_selector }
 
         if ($parent.find(nested_form_selector).find('input[id$="_destroy"]').length) {
           return 'input[id$="_destroy"]';
@@ -126,19 +137,8 @@
         }
       }
 
-      function inferred_name(){
-        return nested_form_selector.replace('.', '');
-      }
-      
-      function inferred_add_selector(){
-        return 'a[href="#add_'+inferred_name()+'"]';
-      }
-
-      function inferred_remove_selector(){
-        return 'a[href="#remove_'+inferred_name()+'"]';
-      }
-
       cycle_classes();
     });
   }
 })(jQuery);
+
