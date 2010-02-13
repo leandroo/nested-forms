@@ -74,6 +74,12 @@ See the [defaults object](http://github.com/andyferra/nested-forms/blob/master/j
 History
 -------
 
+### 1.0.1 ###
+
+- Keyboard shortcuts are customizable
+- Added keyboard support for deletion
+
+
 ### 1.0.0 ###
 
 - Initial Release
