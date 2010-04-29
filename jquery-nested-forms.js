@@ -34,7 +34,8 @@
         add_shortcut          : function(e){ return e.keyCode == 13 && e.shiftKey; }, // Shift-Enter
         remove_shortcut       : function(e){ return e.keyCode == 8  && e.shiftKey; }, // Shift-Backspace
         after_add             : function(){},
-        after_remove          : function(){}
+        after_remove          : function(){},
+				index_offset          : 0
       }
 
       var opts = $.extend(defaults, options);
@@ -93,7 +94,7 @@
         new_nested_form.find('input[type=radio]:first').attr('checked', true);
         
         // update the field indices
-        var new_item_index = $parent.find(nested_form_selector).length;
+        var new_item_index = $parent.find(nested_form_selector).length + opts.index_offset;
         new_nested_form.find('input, textarea, select').each(function(){
           var name_nth_count = 0;
           $(this).attr('name', $(this).attr('name').replace(/\[\d+\]/g, function(str){
