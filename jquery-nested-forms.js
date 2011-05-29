@@ -88,7 +88,7 @@
         var new_nested_form = $parent.find(nested_form_selector+':first').clone().show();
         
         // clear the form
-        new_nested_form.find('input[type=text], select, textarea').val('');
+        new_nested_form.find('input[type=text], input[type=file], select, textarea').val('');
         new_nested_form.find('input[type=checkbox]').attr('checked', false);
         new_nested_form.find('input[type=radio]').attr('checked', false);
         new_nested_form.find('input[type=radio]:first').attr('checked', true);
