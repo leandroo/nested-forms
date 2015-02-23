@@ -1,7 +1,7 @@
 /*
  * jQuery Nested Forms Plugin
  * version: 1.0.0 (2010-02-12)
- * @requires jQuery v1.4.0 or later
+ * @requires jQuery v1.9.0 or later
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -40,17 +40,17 @@
 
       var opts = $.extend(defaults, options);
 
-      $(opts.add_href_selector).live('click', function(){
+      $('body').on('click', opts.add_href_selector, function(){
         create_clone();
         return false;
       });
 
-      $(opts.remove_href_selector).live('click', function(){
+      $('body').on('click', opts.remove_href_selector, function(){
         delete_clone(this);
         return false;
       });
 
-      $parent.find(nested_form_selector+' input').live('keydown', function(e){
+      $('body').on('keydown', $parent.find(nested_form_selector+' input'), function(e){
         if (opts.enable_keyboard){
           if (opts.add_shortcut(e)) {
             create_clone();
@@ -84,29 +84,32 @@
       }
 
       function create_clone(){
-      
         var new_nested_form = $parent.find(nested_form_selector+':first').clone().show();
-        
         // clear the form
         new_nested_form.find('input[type=text], input[type=file], select, textarea').val('');
         new_nested_form.find('input[type=checkbox]').attr('checked', false);
         new_nested_form.find('input[type=radio]').attr('checked', false);
         new_nested_form.find('input[type=radio]:first').attr('checked', true);
-        
+        // rails attributes
+        new_nested_form.find('input[id$="_destroy"]').val(0);
+
         // update the field indices
         var new_item_index = $parent.find(nested_form_selector).length + opts.index_offset;
         new_nested_form.find('input, textarea, select').each(function(){
-          var name_nth_count = 0;
-          $(this).attr('name', $(this).attr('name').replace(/\[\d+\]/g, function(str){
-            name_nth_count++;
-            return (name_nth_count == opts.depth) ? '['+new_item_index+']' : str;
-          }));
-          var id_nth_count = 0;
-          $(this).attr('id', $(this).attr('id').replace(/_\d+_/g, function(str){
-            id_nth_count++;
-            return (id_nth_count == opts.depth) ? '_'+new_item_index+'_' : str;
-          }));
+          if ($(this).attr('id') != null){
+            var name_nth_count = 0;
+            $(this).attr('name', $(this).attr('name').replace(/\[\d+\]/g, function(str){
+              name_nth_count++;
+              return (name_nth_count == opts.depth) ? '['+new_item_index+']' : str;
+            }));
+            var id_nth_count = 0;
+            $(this).attr('id', $(this).attr('id').replace(/_\d+_/g, function(str){
+              id_nth_count++;
+              return (id_nth_count == opts.depth) ? '_'+new_item_index+'_' : str;
+            }));
+          }
         });
+
         new_nested_form.find('label').each(function(){
           var for_nth_count = 0;
           $(this).attr('for', $(this).attr('for').replace(/_\d+_/g, function(str){
